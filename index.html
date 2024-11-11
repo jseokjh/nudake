@@ -6,6 +6,7 @@
     <title>Halloween Event</title>
     <link href="https://fonts.googleapis.com/css2?family=Kranky&display=swap" rel="stylesheet">
     <style>
+        /* Basic styling */
         body {
             font-family: 'Kranky', cursive;
             display: flex;
@@ -13,11 +14,10 @@
             align-items: center;
             margin: 0;
             padding: 0;
-            background-color: #FFFFFF;
+            background-color: #F0F0F0;
             cursor: default;
         }
 
-        /* Centered image with bottom margin */
         .main-image {
             margin-top: 50px;
         }
@@ -35,261 +35,194 @@
             color: #2e2b2d;
         }
 
-        /* Margin below text */
         .text-margin {
             margin-bottom: 100px;
         }
 
-        /* Styling for mouse div */
-        .mouse {
-            width: 100%;
-            height: 500px;
-            background-color: #161616;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-            color: #2e2b2d;
-            position: relative;
-        }
-
+        /* 카드 박스와 각 레이어의 위치 및 크기 조정 */
         .card {
-            width: 100%;
-            height: 300px;
-            background-color: #e2b4b4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-            color: #2e2b2d;
-        }
-
-        /* Ghost cursor styling */
-        #ghost {
-            display: none;
-            position: absolute;
-            width: 90px;
-            height: 120px;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 1000;
-        }
-
-        .ghost__head {
             position: relative;
-            width: 90px;
-            height: 90px;
-            background: #161616;
-            border-radius: 45px 45px 0 0;
-            z-index: 1;
-        }
-
-        .ghost__eyes {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            top: 34px;
-            left: 50%;
-            transform: translate(-50%);
-            border-radius: 50px;
-            background: #FFFFFF;
-            box-shadow: 40px 0 0 #FFFFFF;
-        }
-
-        .ghost__mouth {
-            position: absolute;
-            width: 20px;
-            height: 10px;
-            top: 60px;
-            left: 50%;
-            transform: translate(-50%);
-            background: #FFFFFF;
-            border-radius: 20px 20px 12px 12px;
-            overflow: hidden;
-        }
-
-        .ghost__tail {
-            position: absolute;
-            top: 82px;
-            height: 55px;
-            width: 100%;
-            filter: url(#goo);
-        }
-
-        .ghost__tail:before {
-            content: '';
-            background: #fff;
-            position: absolute;
-            bottom: 35px;
-            left: 0;
-            height: 100px;
-            width: 100%;
-            border-radius: 40px 40px 5px 5px;
-        }
-
-        .ghost__rip {
-            width: 15px;
-            height: 28px;
-            background: #fff;
-            position: absolute;
-            top: 15px;
-            left: 0;
-            box-shadow: -62px 0 0 #fff, -31px 0 0 #fff, 31px 0 0 #fff, 62px 0 0 #fff, 93px 0 0 #fff;
-            border-radius: 50%;
-            animation: ghost-rips 1.2s linear infinite;
-        }
-
-        @keyframes ghost-rips {
-            0% {
-                left: 0;
-                top: 12px;
-            }
-            50% {
-                left: 31px;
-                top: 20px;
-            }
-            100% {
-                left: 62px;
-                top: 12px;
-            }
-        }
-
-        /* New Image Container Styling */
-        .image-container {
             display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
+            perspective: 1200px;
+            margin-top: 400px;
+            width: 200px;
+            height: 280px;
         }
 
-        .image-item img {
-            width: 500px;
-            height: auto;
+        .box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: rotateX(-10deg);
+        }
+
+        .box__face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-color: #ececec;
+        }
+
+        .box__front {
+            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/coolclub-front.png');
+            transform: translateZ(15px);
+        }
+
+        .box__back {
+            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/coolclub-back-2.png');
+            transform: rotateY(180deg) translateZ(15px);
+        }
+
+        .box__left {
+            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/coolclub-left.png');
+            width: 30px;
+            transform: rotateY(-90deg) translateZ(85px);
+            left: -15px;
+        }
+
+        .box__right {
+            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/coolclub-right.png');
+            width: 30px;
+            transform: rotateY(90deg) translateZ(85px);
+            right: -15px;
+        }
+
+        .box__bottom {
+            background-color: #ececec;
+            transform: rotateX(90deg) translateZ(85px);
+            bottom: -15px;
+        }
+
+        .box__lid {
+            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/coolclub-logo-full.png');
+            transform: rotateX(-90deg) translateZ(85px);
+            top: -15px;
+        }
+
+        /* Cake inner with centered images */
+        .cake_inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 100px;
+        }
+
+        .cake_inner img {
+            max-width: 20%;
+            margin: 10px 0;
+        }
+
+        /* 카드 레이어 위치 조정 */
+        .card-layer {
+            position: absolute;
+            top: -20px; /* 박스 상단에서 조금 더 위로 위치 */
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(200px * 0.9);
+            height: calc((200px * 0.9) * 1.3944);
+            backface-visibility: hidden;
+            transform-origin: bottom center; /* 아래쪽을 기준으로 회전 */
+        }
+
+        .card-layer--1 {
+            background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/fwa-cards-01.png') no-repeat center center;
+            background-size: cover;
+        }
+
+        .card-layer--2 {
+            background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/fwa-cards-02.png') no-repeat center center;
+            background-size: cover;
+        }
+
+        .card-layer--3 {
+            background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/fwa-cards-03.png') no-repeat center center;
+            background-size: cover;
+        }
+
+        .card-layer--4 {
+            background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/fwa-cards-04.png') no-repeat center center;
+            background-size: cover;
+        }
+
+        .card-layer--5 {
+            background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/fwa-cards-05.png') no-repeat center center;
+            background-size: cover;
         }
     </style>
 </head>
 <body>
 
-    <!-- Main Image -->
     <div class="main-image">
-        <img src="src/cake.png" alt="Halloween Ghost">
+        <img src="cake1.png" alt="Halloween Ghost">
     </div>
 
-    <!-- Main Text -->
     <div class="main-text text-margin">
         The Halloween ghost is still wandering around, hiding its secrets. Don’t be deceived by what you see! <br>
         PS: Sweet, Tangy, and Sour!
     </div>
 
-    <!-- Mouse Div -->
-    <div class="mouse">
-        Mouse Area
-        <div id="ghost" class="ghost">
-            <div class="ghost__head">
-                <div class="ghost__eyes"></div>
-                <div class="ghost__mouth"></div>
-            </div>
-            <div class="ghost__tail">
-                <div class="ghost__rip"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Card Div with Text Only -->
     <div class="card">
-        Card Div
+        <div class="box">
+            <div class="box__face box__front"></div>
+            <div class="box__face box__back"></div>
+            <div class="box__face box__left"></div>
+            <div class="box__face box__right"></div>
+            <div class="box__face box__bottom"></div>
+            <div class="box__face box__lid"></div>
+
+            <div class="card-layer card-layer--1"></div>
+            <div class="card-layer card-layer--2"></div>
+            <div class="card-layer card-layer--3"></div>
+            <div class="card-layer card-layer--4"></div>
+            <div class="card-layer card-layer--5"></div>
+        </div>
     </div>
 
-    <!-- Image Container with Centered Images -->
-    <div class="image-container">
-        <div class="image-item">
-            <img src="src/cake.png" alt="Image 1">
-        </div>
-        <div class="image-item">
-            <img src="src/ghost.png" alt="Image 2">
-        </div>
+
+    <div class="cake_inner">
+        <img src="cake2.png" alt="Cake Image 1">
+        <img src="cake3.png" alt="Cake Image 2">
+        <img src="cake2.png" alt="Cake Image 3">
     </div>
 
-    <!-- SVG Filter for Gooey Effect -->
-    <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-        <defs>
-            <filter id="goo">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="ghost-blur" />
-                <feColorMatrix in="ghost-blur" mode="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 16 -7" result="ghost-gooey" />
-            </filter>
-        </defs>
-    </svg>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
     <script>
-        // Selecting the mouse div and ghost cursor
-        const mouseDiv = document.querySelector('.mouse');
-        const ghost = document.getElementById('ghost');
+        function animateCards() {
+            const tl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
 
-        let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2, dir: '' };
-        let clicked = false;
+            // 카드 박스 자체 회전 애니메이션
+            tl.to(".box", {
+                rotateY: 360,
+                ease: "power2.inOut",
+                duration: 2,
+            }, 0);
 
-        const getMouse = (e) => {
-            mouse = {
-                x: e.clientX || e.pageX || e.touches[0].pageX || 0 || window.innerWidth / 2,
-                y: e.clientY || e.pageY || e.touches[0].pageY || 0 || window.innerHeight / 2,
-                dir: (mouse.x > e.clientX) ? 'left' : 'right'
-            }
+            // 카드 레이어들이 순차적으로 퍼져나갔다가 돌아오는 애니메이션
+            tl.to(".card-layer--1", { y: "-150%", rotation: 45, x: "40%", ease: "power2", duration: 0.8 }, 0)
+              .to(".card-layer--2", { y: "-150%", rotation: 25, x: "20%", ease: "power2", duration: 0.8 }, 0.1)
+              .to(".card-layer--3", { y: "-150%", rotation: 0, x: "0%", ease: "power2", duration: 0.8 }, 0.2)
+              .to(".card-layer--4", { y: "-150%", rotation: -25, x: "-20%", ease: "power2", duration: 0.8 }, 0.3)
+              .to(".card-layer--5", { y: "-150%", rotation: -45, x: "-40%", ease: "power2", duration: 0.8 }, 0.4)
+
+              .to(".card-layer--1", { y: "0%", rotation: 0, x: "0%", ease: "sine.in", duration: 0.6 }, "+=0.4")
+              .to(".card-layer--2", { y: "0%", rotation: 0, x: "0%", ease: "sine.in", duration: 0.6 }, "+=0.5")
+              .to(".card-layer--3", { y: "0%", rotation: 0, x: "0%", ease: "sine.in", duration: 0.6 }, "+=0.6")
+              .to(".card-layer--4", { y: "0%", rotation: 0, x: "0%", ease: "sine.in", duration: 0.6 }, "+=0.7")
+              .to(".card-layer--5", { y: "0%", rotation: 0, x: "0%", ease: "sine.in", duration: 0.6 }, "+=0.8");
+        }
+
+        function init() {
+            animateCards();
+        }
+
+        window.onload = (event) => {
+            init();
         };
-
-        ['mousemove', 'touchstart', 'touchmove'].forEach(e => {
-            mouseDiv.addEventListener(e, getMouse);
-        });
-        mouseDiv.addEventListener('mousedown', (e) => {
-            e.preventDefault();
-            clicked = true;
-        });
-        mouseDiv.addEventListener('mouseup', () => {
-            clicked = false;
-        });
-
-        class GhostFollow {
-            constructor(options) {
-                Object.assign(this, options);
-
-                this.el = document.querySelector('#ghost');
-                this.mouth = document.querySelector('.ghost__mouth');
-                this.eyes = document.querySelector('.ghost__eyes');
-                this.pos = { x: 0, y: 0 }
-            }
-
-            follow() {
-                this.distX = mouse.x - this.pos.x;
-                this.distY = mouse.y - this.pos.y;
-
-                this.velX = this.distX / 8;
-                this.velY = this.distY / 8;
-
-                this.pos.x += this.velX;
-                this.pos.y += this.velY;
-
-                this.el.style.transform = `translate(${this.pos.x}px, ${this.pos.y}px) scale(0.7)`;
-            }
-        }
-
-        const cursor = new GhostFollow();
-
-        const render = () => {
-            requestAnimationFrame(render);
-            cursor.follow();
-        }
-        render();
-
-        // Event listener for mouse entering the mouse div
-        mouseDiv.addEventListener('mouseenter', () => {
-            ghost.style.display = 'block'; // Show ghost cursor
-        });
-
-        // Event listener for mouse leaving the mouse div
-        mouseDiv.addEventListener('mouseleave', () => {
-            ghost.style.display = 'none'; // Hide ghost cursor
-        });
     </script>
 
 </body>
 </html>
-
