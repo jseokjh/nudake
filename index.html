@@ -3,10 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halloween Event</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kranky&display=swap" rel="stylesheet">
+    <title>NUDAKE</title>
+    <!-- Font link -->
+    <link href="https://fonts.googleapis.com/css2?family=Kranky&family=Iowan+Old+Style:ital,wght@0,400;0,700&family=Irish+Grover&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        /* Basic styling */
+        :root {
+            --box-width: 180px;
+            --box-height: calc(var(--box-width) * 1.387);
+            --box-depth: calc(var(--box-width) * 0.27355);
+            --box-grey: #ececec;
+            --card-width: calc(var(--box-width) * 0.9);
+            --card-height: calc(var(--card-width) * 1.3944);
+            --card-gap: calc(var(--box-width) / 50);
+            --color1: rgb(192, 0, 100);
+            --color2: rgb(225, 143, 0);
+        }
+
         body {
             font-family: 'Kranky', cursive;
             display: flex;
@@ -14,215 +28,275 @@
             align-items: center;
             margin: 0;
             padding: 0;
-            background-color: #F0F0F0;
+            background-color: #FFFFFF;
             cursor: default;
         }
 
         .main-image {
             margin-top: 50px;
+            display: flex;
+            width: 100%;
         }
 
         .main-image img {
-            display: block;
-            margin: 0 auto;
-            height: 500px;
+            width: 50%;
+            object-fit: cover;
+        }
+
+        .card-image {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .card {
+            position: relative;
+            width: var(--card-width);
+            height: auto;
+            overflow: hidden;
+            transition: transform 0.5s ease, box-shadow 0.2s ease;
+            will-change: transform, filter;
+            background-color: #040712;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            transform-origin: center;
+            border-radius: 5% / 3.5%;
+            box-shadow: -5px -5px 5px -5px var(--color1), 5px 5px 5px -5px var(--color2), -7px -7px 10px -5px transparent, 7px 7px 10px -5px transparent, 0 0 5px 0px rgba(255,255,255,0), 0 55px 35px -20px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+
+        .card::before,
+        .card::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            background-repeat: no-repeat;
+            opacity: 0.8;
+            mix-blend-mode: color-dodge;
+            transition: all 0.33s ease;
+        }
+
+        .card::before {
+            background-position: 50% 50%;
+            background-size: 300% 300%;
+            background-image: linear-gradient(115deg, transparent 0%, var(--color1) 25%, transparent 47%, transparent 53%, var(--color2) 75%, transparent 100%);
+            filter: brightness(0.5) contrast(1);
+            z-index: 1;
+        }
+
+        .card::after {
+            background-image: url("https://assets.codepen.io/13471/sparkles.gif"), url("https://assets.codepen.io/13471/holo.png"), linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
+            background-position: 50% 50%;
+            background-size: 160%;
+            background-blend-mode: overlay;
+            z-index: 30;
+            filter: brightness(1) contrast(1);
+            transition: all 0.33s ease;
+            mix-blend-mode: color-dodge;
+            opacity: 0.8;
+        }
+
+        .card:hover::before,
+        .card:hover::after {
+            filter: brightness(1) contrast(1);
+            opacity: 1;
         }
 
         .main-text {
-            text-align: center;
-            margin-top: 100px;
-            font-size: 24px;
-            color: #2e2b2d;
-        }
-
-        .text-margin {
-            margin-bottom: 100px;
-        }
-
-        /* 카드 박스와 각 레이어의 위치 및 크기 조정 */
-        .card {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            perspective: 1200px;
-            margin-top: 400px;
-            width: 200px;
-            height: 280px;
-        }
-
-        .box {
             position: relative;
             width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            transform: rotateX(-10deg);
+            font-family: 'Iowan Old Style', serif;
         }
 
-        .box__face {
-            position: absolute;
+        .main-text img {
             width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-color: #ececec;
+            display: block;
         }
 
-        .box__front {
-            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/coolclub-front.png');
-            transform: translateZ(15px);
-        }
-
-        .box__back {
-            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/coolclub-back-2.png');
-            transform: rotateY(180deg) translateZ(15px);
-        }
-
-        .box__left {
-            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/coolclub-left.png');
-            width: 30px;
-            transform: rotateY(-90deg) translateZ(85px);
-            left: -15px;
-        }
-
-        .box__right {
-            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/coolclub-right.png');
-            width: 30px;
-            transform: rotateY(90deg) translateZ(85px);
-            right: -15px;
-        }
-
-        .box__bottom {
-            background-color: #ececec;
-            transform: rotateX(90deg) translateZ(85px);
-            bottom: -15px;
-        }
-
-        .box__lid {
-            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/coolclub-logo-full.png');
-            transform: rotateX(-90deg) translateZ(85px);
-            top: -15px;
-        }
-
-        /* Cake inner with centered images */
-        .cake_inner {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 100px;
-        }
-
-        .cake_inner img {
-            max-width: 20%;
-            margin: 10px 0;
-        }
-
-        /* 카드 레이어 위치 조정 */
-        .card-layer {
+        .text-overlay {
             position: absolute;
-            top: -20px; /* 박스 상단에서 조금 더 위로 위치 */
+            top: 10%;
             left: 50%;
-            transform: translateX(-50%);
-            width: calc(200px * 0.9);
-            height: calc((200px * 0.9) * 1.3944);
-            backface-visibility: hidden;
-            transform-origin: bottom center; /* 아래쪽을 기준으로 회전 */
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #000000;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 10px;
         }
 
-        .card-layer--1 {
-            background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/fwa-cards-01.png') no-repeat center center;
-            background-size: cover;
+        .sub-text {
+            font-family: 'Irish Grover', cursive;
         }
 
-        .card-layer--2 {
-            background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/fwa-cards-02.png') no-repeat center center;
-            background-size: cover;
+        .slider-container {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            overflow: hidden;
+            margin-top: 100px;
         }
 
-        .card-layer--3 {
-            background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/fwa-cards-03.png') no-repeat center center;
-            background-size: cover;
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
         }
 
-        .card-layer--4 {
-            background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/fwa-cards-04.png') no-repeat center center;
-            background-size: cover;
+        .slider img {
+            width: 800px;
+            height: 800px;
+            object-fit: cover;
         }
 
-        .card-layer--5 {
-            background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/fwa-cards-05.png') no-repeat center center;
-            background-size: cover;
+        .navigation {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .navigation button {
+            color: black;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 36px;
+        }
+
+        .navigation button:hover {
+            color: #000;
         }
     </style>
 </head>
 <body>
-
     <div class="main-image">
-        <img src="cake1.png" alt="Halloween Ghost">
+        <img src="src/specter.png" alt="Halloween Ghost">
+        <img src="src/box.png" alt="Halloween Ghost">
     </div>
 
     <div class="main-text text-margin">
-        The Halloween ghost is still wandering around, hiding its secrets. Don’t be deceived by what you see! <br>
-        PS: Sweet, Tangy, and Sour!
-    </div>
+        <img src="src/back_orange.png" alt="Background Image">
 
-    <div class="card">
-        <div class="box">
-            <div class="box__face box__front"></div>
-            <div class="box__face box__back"></div>
-            <div class="box__face box__left"></div>
-            <div class="box__face box__right"></div>
-            <div class="box__face box__bottom"></div>
-            <div class="box__face box__lid"></div>
+        <div class="text-overlay">
+            <div class="main-text">
+                The Halloween ghost is still wandering around, hiding its secrets. <br> Don’t be deceived by what you see!
+            </div>
+            <br>
+            <div class="sub-text">
+                PS: Sweet, Tangy, and Sour!
+            </div>
+        </div>
 
-            <div class="card-layer card-layer--1"></div>
-            <div class="card-layer card-layer--2"></div>
-            <div class="card-layer card-layer--3"></div>
-            <div class="card-layer card-layer--4"></div>
-            <div class="card-layer card-layer--5"></div>
+        <!-- Card Section -->
+        <div class="card-image">
+            <img class="animated card" src="src/card1.png" alt="Halloween Card">
+            <img class="animated card" src="src/card2.png" alt="Halloween Card">
+            <img class="animated card" src="src/card3.png" alt="Halloween Card">
+        </div>
+
+        <!-- Slider Section -->
+        <div class="slider-container">
+            <div class="slider">
+                <img src="src/cakes/main_cake.png" alt="Image 1">
+                <img src="src/cakes/amber.png" alt="Image 2">
+                <img src="src/cakes/pink.png" alt="Image 3">
+                <img src="src/cakes/purple1.png" alt="Image 4">
+            </div>
+            <div class="navigation">
+                <button id="prevBtn"><</button>
+                <button id="nextBtn">> </button>
+            </div>
         </div>
     </div>
 
+    <style class="hover"></style>
 
-    <div class="cake_inner">
-        <img src="cake2.png" alt="Cake Image 1">
-        <img src="cake3.png" alt="Cake Image 2">
-        <img src="cake2.png" alt="Cake Image 3">
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
     <script>
-        function animateCards() {
-            const tl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
+        // Slider Animation
+        const slider = document.querySelector('.slider');
+        const images = document.querySelectorAll('.slider img');
+        const prevButton = document.getElementById('prevBtn');
+        const nextButton = document.getElementById('nextBtn');
 
-            // 카드 박스 자체 회전 애니메이션
-            tl.to(".box", {
-                rotateY: 360,
-                ease: "power2.inOut",
-                duration: 2,
-            }, 0);
+        let currentIndex = 0;
 
-            // 카드 레이어들이 순차적으로 퍼져나갔다가 돌아오는 애니메이션
-            tl.to(".card-layer--1", { y: "-150%", rotation: 45, x: "40%", ease: "power2", duration: 0.8 }, 0)
-              .to(".card-layer--2", { y: "-150%", rotation: 25, x: "20%", ease: "power2", duration: 0.8 }, 0.1)
-              .to(".card-layer--3", { y: "-150%", rotation: 0, x: "0%", ease: "power2", duration: 0.8 }, 0.2)
-              .to(".card-layer--4", { y: "-150%", rotation: -25, x: "-20%", ease: "power2", duration: 0.8 }, 0.3)
-              .to(".card-layer--5", { y: "-150%", rotation: -45, x: "-40%", ease: "power2", duration: 0.8 }, 0.4)
-
-              .to(".card-layer--1", { y: "0%", rotation: 0, x: "0%", ease: "sine.in", duration: 0.6 }, "+=0.4")
-              .to(".card-layer--2", { y: "0%", rotation: 0, x: "0%", ease: "sine.in", duration: 0.6 }, "+=0.5")
-              .to(".card-layer--3", { y: "0%", rotation: 0, x: "0%", ease: "sine.in", duration: 0.6 }, "+=0.6")
-              .to(".card-layer--4", { y: "0%", rotation: 0, x: "0%", ease: "sine.in", duration: 0.6 }, "+=0.7")
-              .to(".card-layer--5", { y: "0%", rotation: 0, x: "0%", ease: "sine.in", duration: 0.6 }, "+=0.8");
-        }
-
-        function init() {
-            animateCards();
-        }
-
-        window.onload = (event) => {
-            init();
+        const updateSliderPosition = () => {
+            slider.style.transform = `translateX(${-currentIndex * 800}px)`;
         };
-    </script>
 
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+            updateSliderPosition();
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+            updateSliderPosition();
+        });
+
+        // Holo Effect Animation
+        var x;
+        var $cards = $(".card-image img");
+        var $style = $(".hover");
+
+        $cards
+            .on("mousemove touchmove", function(e) {
+                var pos = [e.offsetX, e.offsetY];
+                e.preventDefault();
+                if (e.type === "touchmove") {
+                    pos = [e.touches[0].clientX, e.touches[0].clientY];
+                }
+                var $card = $(this);
+                var l = pos[0];
+                var t = pos[1];
+                var h = $card.height();
+                var w = $card.width();
+                var px = Math.abs(Math.floor(100 / w * l) - 100);
+                var py = Math.abs(Math.floor(100 / h * t) - 100);
+                var pa = (50 - px) + (50 - py);
+                var lp = (50 + (px - 50) / 1.5);
+                var tp = (50 + (py - 50) / 1.5);
+                var px_spark = (50 + (px - 50) / 7);
+                var py_spark = (50 + (py - 50) / 7);
+                var p_opc = 40 + (Math.abs(pa) * 1.5); // Increased base opacity for better visibility
+                var ty = ((tp - 50) / 2) * -1;
+                var tx = ((lp - 50) / 1.5) * 0.5;
+                var grad_pos = `background-position: ${lp}% ${tp}%;`;
+                var sprk_pos = `background-position: ${px_spark}% ${py_spark}%;`;
+                var opc = `opacity: ${p_opc / 100};`;
+                var tf = `transform: rotateX(${ty}deg) rotateY(${tx}deg)`;
+                var style = `
+                    .card:hover::before { ${grad_pos} }
+                    .card:hover::after { ${sprk_pos} ${opc} }
+                `;
+                $cards.removeClass("active");
+                $card.removeClass("animated");
+                $card.attr("style", tf);
+                $style.html(style);
+                if (e.type === "touchmove") {
+                    return false;
+                }
+                clearTimeout(x);
+            }).on("mouseout touchend touchcancel", function() {
+                var $card = $(this);
+                $style.html("");
+                $card.removeAttr("style");
+                $card.addClass("animated");
+            });
+    </script>
 </body>
 </html>
