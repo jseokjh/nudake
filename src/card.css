@@ -20,23 +20,24 @@
   
   .card {
   
-    width: 71.5vw;
-    height: 100vw;
-      /* // width: clamp(200px, 61vh, 18vw);
-      // height: clamp(280px, 85vh, 25.2vw); */
+    /* width: 71.5vw;
+    height: 100vw; */
+    /* width: clamp(200px, 61vh, 18vw);
+    height: clamp(280px, 85vh, 25.2vw); */
+
+    
     @media screen and (min-width: 600px) {
-      /* // width: 61vh;
-      // height: 85vh;
-      // max-width: 500px;
-      // max-height: 700px; */
-      width: clamp(12.9vw, 61vh, 18vw);
-      height: clamp(18vw, 85vh, 25.2vw);
+      width: 61vh;
+      height: 85vh;
+      max-width: 500px;
+      max-height: 700px;
+      /* width: clamp(12.9vw, 61vh, 18vw);
+      height: clamp(18vw, 85vh, 25.2vw); */
     }
     
     position: relative;
     overflow: hidden;
     margin: 20px;
-    overflow: hidden;
     z-index: 10;
     touch-action: none;
     
@@ -313,8 +314,9 @@
   #app {
     position: relative;
   }
+    */
   
-  .demo,
+  /* .demo, */
   .cards { 
     display: flex;
     flex-direction: column;
@@ -325,17 +327,22 @@
     z-index: 1;
     transform: translate3d(0.1px, 0.1px, 0.1px )
   }
+   
+   
+   /* 
   .demo {
     flex-direction: row;
     justify-content: center;
   }
+  */
   
+   
   @media screen and (min-width: 600px) {
     .cards {
       flex-direction: row;
     }
   }
-   */
+  
   
   
   
