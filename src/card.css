@@ -26,9 +26,10 @@
     height: clamp(280px, 85vh, 25.2vw); */
 
     
-    @media screen and (min-width: 600px) {
-      width: 61vh;
-      height: 85vh;
+    @media screen and (min-width: 500px) {
+      width: 61vh; /* 가로 크기를 높이 기준으로 설정 */
+        aspect-ratio: 2 / 3; /* 가로:세로 비율 2:3 고정 */
+      /* height: 85vh; */
       max-width: 500px;
       max-height: 700px;
       /* width: clamp(12.9vw, 61vh, 18vw);
